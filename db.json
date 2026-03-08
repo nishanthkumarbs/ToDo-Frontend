@@ -1,0 +1,72 @@
+{
+  "users": [
+    {
+      "id": "4e57",
+      "name": "Nishanth Gowda",
+      "email": "nishanth@gmail.com",
+      "password": "Nish@123",
+      "avatar": null
+    },
+    {
+      "id": "1c18",
+      "name": "Nikhil Gowda",
+      "email": "nikhil@gmail.com",
+      "password": "Nikhil@123",
+      "avatar": null
+    }
+  ],
+  "todos": [
+    {
+      "id": "d416",
+      "title": "Today",
+      "completed": true,
+      "priority": "high",
+      "dueDate": "2026-03-01",
+      "category": "personal",
+      "repeat": "daily",
+      "reminder": "2026-03-01T21:45",
+      "createdAt": "2026-03-01T15:18:36.830Z",
+      "userId": "4e57",
+      "completedAt": "2026-03-02T05:59:25.503Z"
+    },
+    {
+      "id": "c13e",
+      "title": "Next",
+      "completed": true,
+      "priority": "low",
+      "dueDate": "2026-03-02",
+      "category": "study",
+      "repeat": "weekly",
+      "reminder": "2026-03-02T12:08",
+      "createdAt": "2026-03-01T15:57:42.473Z",
+      "userId": "4e57",
+      "completedAt": "2026-03-03T13:04:14.736Z"
+    },
+    {
+      "id": "8c31",
+      "title": "Check",
+      "completed": true,
+      "priority": "medium",
+      "dueDate": "2026-03-03",
+      "category": "work",
+      "repeat": "daily",
+      "reminder": "2026-03-01T22:48",
+      "createdAt": "2026-03-01T17:16:26.219Z",
+      "userId": "1c18",
+      "completedAt": "2026-03-03T13:05:47.359Z"
+    },
+    {
+      "id": "48ca",
+      "title": "ಕನ್ನಡ",
+      "completed": false,
+      "priority": "high",
+      "dueDate": "2026-03-04",
+      "category": "personal",
+      "repeat": "daily",
+      "reminder": "",
+      "createdAt": "2026-03-03T12:59:52.000Z",
+      "userId": "4e57",
+      "completedAt": null
+    }
+  ]
+}
