@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { createTodo } from "../services/api";
+import { getSessionUser } from "../services/auth";
 import {
     FaCalendarAlt,
     FaFlag,
@@ -25,7 +26,7 @@ const TodoForm = ({ fetchTodos }) => {
         if (!title.trim()) return;
 
         try {
-            const user = JSON.parse(localStorage.getItem("user"));
+            const user = getSessionUser();
 
             await createTodo({
                 title,

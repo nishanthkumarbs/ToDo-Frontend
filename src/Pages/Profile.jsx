@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
-import API from "../services/api";
+import { getSessionUser } from "../services/auth";
 
 const Profile = ({ darkMode, setUser }) => {
     const [passwordChecks, setPasswordChecks] = useState({
@@ -12,7 +11,7 @@ const Profile = ({ darkMode, setUser }) => {
         number: false,
         special: false
     });
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = getSessionUser();
     const [avatarPreview, setAvatarPreview] = useState(storedUser?.avatar || null);
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -25,60 +24,27 @@ const Profile = ({ darkMode, setUser }) => {
     const [name, setName] = useState(storedUser?.name || "");
 
     const handleSave = async () => {
-        try {
-            // Update user in db.json
-            const res = await axios.patch(
-                `http://localhost:5000/users/${storedUser.id}`,
-                { name }
-            );
-
-            // Update localStorage
-            localStorage.setItem("user", JSON.stringify(res.data));
-            setUser(res.data);   // 🔥 updates App instantly
-
-            setIsEditing(false);
-            toast.success("Profile updated successfully!");
-
-        } catch (error) {
-            console.error(error);
-            toast.error("Update failed!");
-        }
+        // Profile name update is not yet supported by the backend.
+        // Updating local session display name only.
+        sessionStorage.setItem("uname", name);
+        if (setUser) setUser(prev => ({ ...prev, name }));
+        setIsEditing(false);
+        toast.success("Display name updated!");
     };
 
     const handlePasswordChange = async () => {
-        try {
-            if (currentPassword !== storedUser.password) {
-                toast.error("Current password is incorrect!");
-                return;
-            }
-
-            if (newPassword !== confirmPassword) {
-                toast.error("Passwords do not match!");
-                return;
-            }
-
-            if (newPassword.length < 6) {
-                toast.error("Password must be at least 6 characters!");
-                return;
-            }
-
-            const res = await axios.patch(
-                `http://localhost:5000/users/${storedUser.id}`,
-                { password: newPassword }
-            );
-
-            localStorage.setItem("user", JSON.stringify(res.data));
-
-            setCurrentPassword("");
-            setNewPassword("");
-            setConfirmPassword("");
-
-            toast.success("Password updated successfully!");
-
-        } catch (error) {
-            console.error(error);
-            toast.error("Password update failed!");
+        if (newPassword !== confirmPassword) {
+            toast.error("Passwords do not match!");
+            return;
         }
+
+        if (newPassword.length < 6) {
+            toast.error("Password must be at least 6 characters!");
+            return;
+        }
+
+        // Password change not yet supported by the backend API.
+        toast.info("Password change is not available yet. Please contact support.");
     };
 
     const checkPasswordStrength = (password) => {
@@ -101,29 +67,13 @@ const Profile = ({ darkMode, setUser }) => {
         if (!file) return;
 
         const reader = new FileReader();
-
-        reader.onload = async () => {
-            try {
-                const updatedUser = {
-                    ...storedUser,
-                    avatar: reader.result
-                };
-
-                const res = await API.put(
-                    `/users/${storedUser.id}`,
-                    updatedUser
-                );
-
-                localStorage.setItem("user", JSON.stringify(res.data));
-                setAvatarPreview(res.data.avatar);
-
-                toast.success("Avatar updated!");
-            } catch (error) {
-                console.error(error);
-                toast.error("Image upload failed!");
-            }
+        reader.onload = () => {
+            // Store avatar preview in sessionStorage only
+            sessionStorage.setItem("uavatar", reader.result);
+            setAvatarPreview(reader.result);
+            if (setUser) setUser(prev => ({ ...prev, avatar: reader.result }));
+            toast.success("Avatar updated!");
         };
-
         reader.readAsDataURL(file);
     };
 

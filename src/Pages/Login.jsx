@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { loginUser } from "../services/api";
+import { saveSession, getSessionUser } from "../services/auth";
 
 const Login = ({ setUser }) => {
 
@@ -35,10 +36,9 @@ const Login = ({ setUser }) => {
                 loginData.password.trim()
             );
 
-            localStorage.setItem("user", JSON.stringify(res.user));
-            localStorage.setItem("token", res.token);
+            saveSession(res.token, res.user);
 
-            setUser(res.user);
+            setUser(getSessionUser());
 
             toast.success("Login Successful!");
             navigate("/");

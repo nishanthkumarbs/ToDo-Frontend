@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { getTodos, deleteTodo, createTodo } from "./services/api";
+import { getSessionUser, clearSession } from "./services/auth";
 import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
 import "./styles/App.css";
@@ -33,13 +34,12 @@ function App() {
   const profileRef = useRef(null);
 
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user"))
+    getSessionUser()
   );
   const savedAvatar = user?.avatar;
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    clearSession();
     setProfileOpen(false);
     setUser(null);
   };
@@ -226,10 +226,10 @@ function App() {
   });
 
   const handleDeleteWithUndo = async (task) => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const currentUser = getSessionUser();
 
     // 🔐 Ownership check
-    if (!user || task.userId !== user.id) {
+    if (!currentUser || task.userId !== currentUser.id) {
       alert("Unauthorized action!");
       return;
     }

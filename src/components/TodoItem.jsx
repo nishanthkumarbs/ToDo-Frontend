@@ -1,4 +1,5 @@
 import { updateTodo } from "../services/api";
+import { getSessionUser } from "../services/auth";
 import { FaCalendarAlt } from "react-icons/fa";
 
 const TodoItem = ({ todo, fetchTodos, setSelectedTask }) => {
@@ -6,7 +7,7 @@ const TodoItem = ({ todo, fetchTodos, setSelectedTask }) => {
     const handleToggle = async (e) => {
         e.stopPropagation(); // prevent opening sidebar
 
-        const user = JSON.parse(localStorage.getItem("user"));
+        const user = getSessionUser();
 
         // 🔐 Ownership check
         if (!user || todo.userId !== user.id) {
