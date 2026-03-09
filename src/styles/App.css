@@ -177,12 +177,17 @@ h1 {
 /* Loading & Error */
 .loading-icon {
   animation: spin 1s linear infinite;
-  font-size: 24px;
+  font-size: 30px;
+  display: block;
+  margin: 20px auto;
 }
 
 .error-icon {
   color: red;
-  font-size: 24px;
+  font-size: 26px;
+  display: block;
+  text-align: center;
+  margin: 20px auto;
 }
 
 @keyframes spin {

@@ -3,7 +3,7 @@ import { getTodos, deleteTodo, createTodo } from "./services/api";
 import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
 import "./styles/App.css";
-import { FaExclamationCircle, FaMoon, FaSpinner, FaSun, FaUserCog } from "react-icons/fa";
+import { FaExclamationCircle, FaMoon, FaSun, FaUserCog } from "react-icons/fa";
 import TaskSidebar from "./components/TaskSidebar";
 import CalendarView from "./components/CalendarView";
 import { FaSearch } from "react-icons/fa";
@@ -12,6 +12,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Profile from "./Pages/Profile";
 import Landing from "./Pages/LandingPage";
+import { ImSpinner } from "react-icons/im";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -342,7 +343,7 @@ function App() {
 
                   <h1>Todo App</h1>
 
-                  {loading && <FaSpinner className="loading-icon" />}
+                  {loading && <ImSpinner className="loading-icon" />}
                   {error && <FaExclamationCircle className="error-icon" />}
 
                   <TodoForm fetchTodos={fetchTodos} />
