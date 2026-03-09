@@ -175,16 +175,20 @@ h1 {
 
 
 /* Loading & Error */
-.loading {
-    text-align: center;
-    color: blue;
-    font-weight: bold;
+.loading-icon {
+  animation: spin 1s linear infinite;
+  font-size: 24px;
 }
 
-.error {
-    text-align: center;
-    color: red;
-    font-weight: bold;
+.error-icon {
+  color: red;
+  font-size: 24px;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive */
