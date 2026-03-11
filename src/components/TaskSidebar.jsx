@@ -77,13 +77,20 @@ const TaskSidebar = ({ darkMode, selectedTask, setSelectedTask, closeSidebar, re
         const created = new Date(selectedTask.createdAt);
         const now = new Date();
 
-        const diffTime = now - created;
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const createdDate = new Date(created.getFullYear(), created.getMonth(), created.getDate());
+        const todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        const diffDays = Math.round((todayDate - createdDate) / (1000 * 60 * 60 * 24));
 
         if (diffDays === 0) return "Created Today";
         if (diffDays === 1) return "Created Yesterday";
+        if (diffDays > 1 && diffDays < 7) return `Created ${diffDays} days ago`;
 
-        return `Created ${diffDays} days ago`;
+        return `Created on ${created.toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        })}`;
     };
 
     const getCompletedText = () => {
@@ -92,26 +99,14 @@ const TaskSidebar = ({ darkMode, selectedTask, setSelectedTask, closeSidebar, re
         const completed = new Date(selectedTask.completedAt);
         const now = new Date();
 
-        const completedDate = new Date(
-            completed.getFullYear(),
-            completed.getMonth(),
-            completed.getDate()
-        );
+        const completedDate = new Date(completed.getFullYear(), completed.getMonth(), completed.getDate());
+        const todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-        const todayDate = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate()
-        );
-
-        const diffDays = Math.floor(
-            (todayDate.getTime() - completedDate.getTime()) /
-            (1000 * 60 * 60 * 24)
-        );
+        const diffDays = Math.round((todayDate - completedDate) / (1000 * 60 * 60 * 24));
 
         if (diffDays === 0) return "Completed Today";
         if (diffDays === 1) return "Completed Yesterday";
-        if (diffDays < 7) return `Completed ${diffDays} days ago`;
+        if (diffDays > 1 && diffDays < 7) return `Completed ${diffDays} days ago`;
 
         return `Completed on ${completed.toLocaleDateString("en-IN", {
             day: "2-digit",
