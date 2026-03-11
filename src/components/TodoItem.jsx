@@ -1,4 +1,4 @@
-import { updateTodo } from "../services/api";
+import { updateTodo, createTodo } from "../services/api";
 import { getSessionUser } from "../services/auth";
 import { FaCalendarAlt } from "react-icons/fa";
 
@@ -16,13 +16,39 @@ const TodoItem = ({ todo, fetchTodos, setSelectedTask }) => {
         }
 
         try {
+            const isCompleting = !todo.completed;
+
             await updateTodo(todo.id, {
                 ...todo,
-                completed: !todo.completed,
-                completedAt: !todo.completed
-                    ? new Date().toISOString()
-                    : null
+                completed: isCompleting,
+                completedAt: isCompleting ? new Date().toISOString() : null
             });
+
+            // ✅ If marking as completed AND it has a repeat pattern, create the next occurrence
+            if (isCompleting && todo.repeat && todo.repeat !== "none" && todo.dueDate) {
+                const currentDue = new Date(todo.dueDate);
+                const nextDue = new Date(currentDue);
+
+                if (todo.repeat === "daily") {
+                    nextDue.setDate(nextDue.getDate() + 1);
+                } else if (todo.repeat === "weekly") {
+                    nextDue.setDate(nextDue.getDate() + 7);
+                } else if (todo.repeat === "monthly") {
+                    nextDue.setMonth(nextDue.getMonth() + 1);
+                }
+
+                await createTodo({
+                    title: todo.title,
+                    completed: false,
+                    priority: todo.priority,
+                    category: todo.category,
+                    repeat: todo.repeat,
+                    reminder: todo.reminder,
+                    dueDate: nextDue.toISOString().split("T")[0],
+                    createdAt: new Date().toISOString(),
+                    userId: user.id
+                });
+            }
 
             fetchTodos();
         } catch (error) {
