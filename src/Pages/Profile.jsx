@@ -22,18 +22,33 @@ const Profile = ({ darkMode, setUser }) => {
     const [showConfirm, setShowConfirm] = useState(false)
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
+    const [isEditingEmail, setIsEditingEmail] = useState(false);
     const [name, setName] = useState(storedUser?.name || "");
+    const [email, setEmail] = useState(storedUser?.email || "");
 
     const handleSave = async () => {
         try {
             await updateUser(storedUser.id, { name });
-            sessionStorage.setItem("uname", name);
+            localStorage.setItem("uname", name);
             if (setUser) setUser(prev => ({ ...prev, name }));
             setIsEditing(false);
             toast.success("Display name updated!");
         } catch (error) {
             console.error(error);
             toast.error("Failed to update name");
+        }
+    };
+
+    const handleEmailSave = async () => {
+        try {
+            await updateUser(storedUser.id, { email });
+            localStorage.setItem("uemail", email);
+            if (setUser) setUser(prev => ({ ...prev, email }));
+            setIsEditingEmail(false);
+            toast.success("Email address updated!");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to update email");
         }
     };
 
@@ -83,7 +98,7 @@ const Profile = ({ darkMode, setUser }) => {
         reader.onload = async () => {
             try {
                 await updateUser(storedUser.id, { avatar: reader.result });
-                sessionStorage.setItem("uavatar", reader.result);
+                localStorage.setItem("uavatar", reader.result);
                 setAvatarPreview(reader.result);
                 if (setUser) setUser(prev => ({ ...prev, avatar: reader.result }));
                 toast.success("Avatar updated!");
@@ -139,7 +154,36 @@ const Profile = ({ darkMode, setUser }) => {
                         </label>
                     </div>
 
-                    <p><strong>Email:</strong> {storedUser?.email}</p>
+                    {/* ===== EMAIL EDIT SECTION ===== */}
+                    <div className="profile-edit-row">
+                        <strong>Email:</strong>
+
+                        {isEditingEmail ? (
+                            <>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="profile-input"
+                                />
+
+                                <button className="save-btn" onClick={handleEmailSave}>
+                                    Save
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <span>{storedUser?.email}</span>
+
+                                <button
+                                    className="edit-btn"
+                                    onClick={() => setIsEditingEmail(true)}
+                                >
+                                    Edit
+                                </button>
+                            </>
+                        )}
+                    </div>
 
                     {/* ===== NAME EDIT SECTION ===== */}
                     <div className="profile-edit-row">
