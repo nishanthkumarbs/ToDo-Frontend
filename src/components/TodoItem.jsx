@@ -1,6 +1,6 @@
 import { updateTodo, createTodo } from "../services/api";
 import { getSessionUser } from "../services/auth";
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaRedo } from "react-icons/fa";
 
 const TodoItem = ({ todo, fetchTodos, setSelectedTask }) => {
 
@@ -89,6 +89,12 @@ const TodoItem = ({ todo, fetchTodos, setSelectedTask }) => {
                 {todo.category && (
                     <span className={`category-badge category-${todo.category}`}>
                         {todo.category}
+                    </span>
+                )}
+
+                {todo.repeat && todo.repeat !== "none" && (
+                    <span className="repeat-badge" title={`Repeats ${todo.repeat}`} style={{ display: "inline-flex", alignItems: "center", marginLeft: "10px" }}>
+                        <FaRedo style={{ color: "var(--text-muted, #888)", fontSize: "0.9em" }} />
                     </span>
                 )}
 
