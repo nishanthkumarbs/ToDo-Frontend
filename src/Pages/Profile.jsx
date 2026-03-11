@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import { getSessionUser } from "../services/auth";
+import { updateUser } from "../services/api";
 
 const Profile = ({ darkMode, setUser }) => {
     const [passwordChecks, setPasswordChecks] = useState({
@@ -24,12 +25,16 @@ const Profile = ({ darkMode, setUser }) => {
     const [name, setName] = useState(storedUser?.name || "");
 
     const handleSave = async () => {
-        // Profile name update is not yet supported by the backend.
-        // Updating local session display name only.
-        sessionStorage.setItem("uname", name);
-        if (setUser) setUser(prev => ({ ...prev, name }));
-        setIsEditing(false);
-        toast.success("Display name updated!");
+        try {
+            await updateUser(storedUser.id, { name });
+            sessionStorage.setItem("uname", name);
+            if (setUser) setUser(prev => ({ ...prev, name }));
+            setIsEditing(false);
+            toast.success("Display name updated!");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to update name");
+        }
     };
 
     const handlePasswordChange = async () => {
@@ -43,8 +48,16 @@ const Profile = ({ darkMode, setUser }) => {
             return;
         }
 
-        // Password change not yet supported by the backend API.
-        toast.info("Password change is not available yet. Please contact support.");
+        try {
+            await updateUser(storedUser.id, { password: newPassword });
+            setCurrentPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+            toast.success("Password updated successfully!");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to update password");
+        }
     };
 
     const checkPasswordStrength = (password) => {
@@ -67,12 +80,17 @@ const Profile = ({ darkMode, setUser }) => {
         if (!file) return;
 
         const reader = new FileReader();
-        reader.onload = () => {
-            // Store avatar preview in sessionStorage only
-            sessionStorage.setItem("uavatar", reader.result);
-            setAvatarPreview(reader.result);
-            if (setUser) setUser(prev => ({ ...prev, avatar: reader.result }));
-            toast.success("Avatar updated!");
+        reader.onload = async () => {
+            try {
+                await updateUser(storedUser.id, { avatar: reader.result });
+                sessionStorage.setItem("uavatar", reader.result);
+                setAvatarPreview(reader.result);
+                if (setUser) setUser(prev => ({ ...prev, avatar: reader.result }));
+                toast.success("Avatar updated!");
+            } catch (error) {
+                console.error(error);
+                toast.error("Failed to update avatar");
+            }
         };
         reader.readAsDataURL(file);
     };

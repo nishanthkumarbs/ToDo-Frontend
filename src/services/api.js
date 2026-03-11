@@ -41,5 +41,9 @@ export const loginUser = async (email, password) => {
   });
   return res.data;
 };
+export const updateUser = async (id, userData) => {
+  const res = await API.patch(`/users/${id}`, userData);
+  return res.data;
+};
 
 export default API;
