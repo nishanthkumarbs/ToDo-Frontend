@@ -48,6 +48,7 @@ export function saveSession(token, user) {
   // Store only the minimum needed for UI display in sessionStorage
   sessionStorage.setItem("uid", user.id);
   sessionStorage.setItem("uname", user.name || "");
+  sessionStorage.setItem("uemail", user.email || "");
   sessionStorage.setItem("uavatar", user.avatar || "");
 }
 
@@ -60,6 +61,7 @@ export function getSessionUser() {
   return {
     id: Number(uid),
     name: sessionStorage.getItem("uname") || "",
+    email: sessionStorage.getItem("uemail") || "",
     avatar: sessionStorage.getItem("uavatar") || "",
   };
 }
@@ -71,5 +73,6 @@ export function clearSession() {
   localStorage.removeItem("token");
   sessionStorage.removeItem("uid");
   sessionStorage.removeItem("uname");
+  sessionStorage.removeItem("uemail");
   sessionStorage.removeItem("uavatar");
 }
