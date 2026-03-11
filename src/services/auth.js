@@ -31,9 +31,9 @@ export function getUserId() {
   const token = getToken();
   if (token) {
     const payload = decodeToken(token);
-    // JWT sub field contains email; user id is stored separately in sessionStorage
-    // We store only the id in sessionStorage (not email or password)
-    const id = sessionStorage.getItem("uid");
+    // JWT sub field contains email; user id is stored separately in localStorage
+    // We store only the id in localStorage (not email or password)
+    const id = localStorage.getItem("uid");
     return id ? Number(id) : null;
   }
   return null;
@@ -45,24 +45,24 @@ export function getUserId() {
  */
 export function saveSession(token, user) {
   localStorage.setItem("token", token);
-  // Store only the minimum needed for UI display in sessionStorage
-  sessionStorage.setItem("uid", user.id);
-  sessionStorage.setItem("uname", user.name || "");
-  sessionStorage.setItem("uemail", user.email || "");
-  sessionStorage.setItem("uavatar", user.avatar || "");
+  // Store minimal UI data in localStorage so session survives tab closes
+  localStorage.setItem("uid", user.id);
+  localStorage.setItem("uname", user.name || "");
+  localStorage.setItem("uemail", user.email || "");
+  localStorage.setItem("uavatar", user.avatar || "");
 }
 
 /**
- * Restore the minimal user object needed by the UI from sessionStorage.
+ * Restore the minimal user object needed by the UI from localStorage.
  */
 export function getSessionUser() {
-  const uid = sessionStorage.getItem("uid");
+  const uid = localStorage.getItem("uid");
   if (!uid) return null;
   return {
     id: Number(uid),
-    name: sessionStorage.getItem("uname") || "",
-    email: sessionStorage.getItem("uemail") || "",
-    avatar: sessionStorage.getItem("uavatar") || "",
+    name: localStorage.getItem("uname") || "",
+    email: localStorage.getItem("uemail") || "",
+    avatar: localStorage.getItem("uavatar") || "",
   };
 }
 
@@ -71,8 +71,8 @@ export function getSessionUser() {
  */
 export function clearSession() {
   localStorage.removeItem("token");
-  sessionStorage.removeItem("uid");
-  sessionStorage.removeItem("uname");
-  sessionStorage.removeItem("uemail");
-  sessionStorage.removeItem("uavatar");
+  localStorage.removeItem("uid");
+  localStorage.removeItem("uname");
+  localStorage.removeItem("uemail");
+  localStorage.removeItem("uavatar");
 }
