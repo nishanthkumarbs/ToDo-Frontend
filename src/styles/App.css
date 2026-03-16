@@ -3988,8 +3988,8 @@ button {
 }
 
 /* ========================================================
-   COMPREHENSIVE RESPONSIVE MEDIA QUERIES
-   Breakpoints: 320, 375, 480, 600, 768, 1024, 1200, 1440, 1920
+   ADDITIONAL RESPONSIVE BREAKPOINTS (Missing Screens)
+   Added: 320px, 375px, 1440px, 1920px, landscape phones
    ======================================================== */
 
 /* ── EXTRA TINY PHONES (e.g. Galaxy Fold) — max 320px ── */
@@ -4016,7 +4016,6 @@ button {
     }
 
     .task-icon { font-size: 20px; }
-
     .task-input { font-size: 14px; }
 
     .filter-buttons {
@@ -4026,9 +4025,7 @@ button {
 
     .filter-buttons button { width: 100%; }
 
-    .sort-container {
-        justify-content: center;
-    }
+    .sort-container { justify-content: center; }
 
     .sort-select {
         width: 100%;
@@ -4044,27 +4041,23 @@ button {
 
     .countdown-badge { align-self: flex-start; }
 
-    /* Sidebar goes full screen, slides up from bottom */
     .sidebar {
         width: 100%;
         border-radius: 0;
         padding: 20px;
         height: 90vh;
+        overflow-y: auto;
         animation: slideUp 0.3s ease forwards;
     }
 
-    .sidebar-overlay {
-        align-items: flex-end;
-    }
+    .sidebar-overlay { align-items: flex-end; }
 
-    /* Calendar scrollable */
     .calendar-container { overflow-x: auto; }
     .calendar-grid { min-width: 500px; gap: 3px; }
     .calendar-cell { min-height: 55px; font-size: 10px; padding: 4px; }
     .calendar-date { font-size: 10px; }
     .calendar-task { font-size: 9px; padding: 1px 4px; }
 
-    /* Auth */
     .auth-container {
         padding: 20px 15px;
         margin: 0;
@@ -4073,7 +4066,6 @@ button {
         max-width: 100%;
     }
 
-    /* Profile */
     .profile-page {
         margin: 0;
         border-radius: 0;
@@ -4087,7 +4079,6 @@ button {
         gap: 8px;
     }
 
-    /* Landing */
     .landing-card {
         padding: 30px 15px;
         border-radius: 0;
@@ -4099,7 +4090,6 @@ button {
     .landing-buttons { flex-direction: column; gap: 10px; }
     .landing-features { flex-direction: column; }
 
-    /* Floating menu full width */
     .floating-menu {
         position: fixed;
         bottom: 0;
@@ -4110,18 +4100,23 @@ button {
         border-radius: 16px 16px 0 0;
     }
 
-    /* Dark toggle repositioned */
     .dark-toggle {
         top: 12px;
         right: 12px;
     }
 
-    /* Task stats */
     .task-stats {
         flex-direction: column;
         gap: 4px;
         font-size: 12px;
     }
+
+    .confirm-modal {
+        width: 95%;
+        padding: 16px;
+    }
+
+    .undo-toast { width: 95%; }
 }
 
 /* ── SMALL PHONES (iPhone SE, older Androids) — max 375px ── */
@@ -4145,10 +4140,7 @@ button {
         justify-content: space-evenly;
     }
 
-    .filter-buttons {
-        flex-wrap: wrap;
-        gap: 6px;
-    }
+    .filter-buttons { flex-wrap: wrap; gap: 6px; }
 
     .sort-select { width: 100%; min-width: unset; }
 
@@ -4160,13 +4152,14 @@ button {
 
     .countdown-badge { align-self: flex-start; }
 
-    /* Sidebar full screen */
     .sidebar {
         width: 100%;
         padding: 20px;
         height: 90vh;
+        overflow-y: auto;
         animation: slideUp 0.3s ease forwards;
     }
+
     .sidebar-overlay { align-items: flex-end; }
 
     .calendar-container { overflow-x: auto; }
@@ -4174,13 +4167,11 @@ button {
     .calendar-cell { min-height: 60px; font-size: 10px; }
     .calendar-date { font-size: 10px; }
 
-    /* Auth */
     .auth-container {
         padding: 25px 18px;
         margin: 10px;
     }
 
-    /* Profile */
     .profile-page {
         margin: 10px;
         padding: 20px;
@@ -4191,15 +4182,16 @@ button {
         align-items: flex-start;
     }
 
-    /* Landing */
     .landing-card { padding: 35px 18px; }
     .landing-title { font-size: 28px; }
     .landing-buttons { flex-direction: column; gap: 10px; }
 
-    /* Floating menu */
     .floating-menu {
         position: fixed;
-        bottom: 0; left: 0; right: 0; top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
         width: 100%;
         border-radius: 16px 16px 0 0;
     }
@@ -4208,205 +4200,15 @@ button {
         flex-direction: column;
         gap: 4px;
     }
-}
 
-/* ── STANDARD PHONES — max 480px (corrects/supplements existing rules) ── */
-@media (max-width: 480px) {
-    .app-container {
-        padding: 16px;
-        margin: 10px;
-        border-radius: 14px;
-    }
-
-    h1 { font-size: 22px; }
-
-    .task-bar { flex-wrap: wrap; gap: 8px; }
-
-    .task-actions {
-        width: 100%;
-        justify-content: space-evenly;
-    }
-
-    .filter-buttons button { font-size: 13px; }
-
-    /* Floating menu draws from bottom on phones */
-    .floating-menu {
-        position: fixed;
-        bottom: 0; left: 0; right: 0; top: auto;
-        width: 100%;
-        border-radius: 14px 14px 0 0;
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
-    }
-
-    .sidebar {
-        width: 100%;
-        padding: 24px 20px;
-        height: 92vh;
-        overflow-y: auto;
-        animation: slideUp 0.3s ease forwards;
-    }
-
-    .sidebar-overlay { align-items: flex-end; }
-
-    .profile-page {
-        margin: 20px 12px;
-        padding: 22px;
-    }
-
-    .profile-edit-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .auth-container {
-        margin: 20px;
-        padding: 28px 20px;
-    }
-
-    .landing-card { padding: 40px 22px; }
-    .landing-title { font-size: 30px; }
-    .landing-buttons { flex-direction: column; gap: 12px; }
-    .landing-features { flex-direction: column; }
-
-    .confirm-modal { width: 90%; padding: 18px; }
-
-    .undo-toast {
-        width: 90%;
-        text-align: center;
-    }
-
-    .view-toggle { flex-wrap: wrap; }
-
-    .dark-toggle {
-        top: 10px;
-        right: 10px;
-        width: 36px;
-        height: 36px;
-    }
-}
-
-/* ── LARGE PHONES / SMALL TABLETS — max 600px ── */
-@media (max-width: 600px) {
-    .app-container {
-        padding: 18px;
-        margin: 15px auto;
-    }
-
-    h1 { font-size: 24px; }
-
-    .task-stats { flex-direction: column; gap: 4px; }
-
-    .filter-buttons { flex-wrap: wrap; }
-
-    .sort-select { min-width: 160px; }
-
-    .sidebar { width: 100%; }
-
-    .calendar-cell { min-height: 75px; }
-
-    .auth-container { margin: 20px; }
-
-    .profile-page {
-        margin: 25px 15px;
-        padding: 25px;
-    }
-
-    .landing-card { padding: 40px 25px; }
-    .landing-title { font-size: 32px; }
-    .landing-features { flex-direction: column; }
-
-    .task-bar { flex-wrap: wrap; }
-
-    .profile-dropdown {
-        right: auto;
-        left: 0;
-        transform: none;
-    }
-}
-
-/* ── TABLET — max 768px (corrects/supplements existing rules) ── */
-@media (max-width: 768px) {
-    .app-container {
-        width: 96%;
-        padding: 25px;
-    }
-
-    h1 { font-size: 26px; }
-
-    .sidebar { width: 320px; }
-
-    .calendar-cell { min-height: 88px; }
-
-    .task-bar { flex-wrap: wrap; }
-
-    .floating-menu { width: 200px; }
-
-    .sort-select { min-width: 180px; }
-
-    /* Profile dropdown stays on screen */
-    .profile-dropdown {
-        right: 0;
-        left: auto;
-        transform: none;
-    }
-
-    .auth-container {
-        max-width: 420px;
-        padding: 35px 28px;
-    }
-
-    .profile-page {
-        max-width: 95%;
-        margin: 40px auto;
-    }
-
-    .landing-card { padding: 50px 35px; }
-
-    .landing-buttons { gap: 14px; }
-
-    /* Task actions slightly bigger for thumbs */
-    .task-icon { font-size: 20px; }
-
-    button { min-height: 36px; }
-}
-
-/* ── SMALL LAPTOP / LARGE TABLET — max 1024px ── */
-@media (max-width: 1024px) {
-    .app-container {
-        max-width: 900px;
-        padding: 30px;
-    }
-
-    .sidebar { width: 340px; }
-
-    .calendar-cell { min-height: 108px; }
-
-    .landing-card { max-width: 480px; }
-
-    .profile-page { max-width: 520px; }
-
-    /* Floating menu stays contained */
-    .floating-menu { width: 210px; }
-}
-
-/* ── STANDARD DESKTOP — min 1200px ── */
-@media (min-width: 1200px) {
-    .app-container { max-width: 1100px; }
-
-    .calendar-cell { min-height: 130px; }
-
-    .sidebar { width: 420px; }
+    .confirm-modal { width: 92%; }
 }
 
 /* ── WIDE SCREENS — min 1440px ── */
 @media (min-width: 1440px) {
     .app-container { max-width: 1200px; }
-
     .calendar-cell { min-height: 150px; }
-
     .sidebar { width: 440px; }
-
     h1 { font-size: 32px; }
 }
 
@@ -4418,11 +4220,8 @@ button {
     }
 
     h1 { font-size: 36px; }
-
     .calendar-cell { min-height: 170px; }
-
     .sidebar { width: 500px; }
-
     .todo-item { padding: 18px 22px; }
 
     .auth-container {
@@ -4458,4 +4257,6 @@ button {
     .landing-card { padding: 30px 30px; }
 
     .landing-title { font-size: 28px; }
-}
+}
+
+
